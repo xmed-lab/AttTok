@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "img_path": "1.png",
+        "input": "Please detect the disease from the Fundus image. The candidate diseases are: No DR, Mild DR, Moderate DR, Severe DR, PDR.",
+        "output": "No DR",
+        "answer_type": "CLOSED"
+    },
+    {
+        "id": 2,
+        "img_path": "2.png",
+        "input": "Please detect the disease from the Fundus image. The candidate diseases are: No DR, Mild DR, Moderate DR, Severe DR, PDR.",
+        "output": "Mild DR",
+        "answer_type": "CLOSED"
+    },
+    {
+        "id": 3,
+        "img_path": "3.png",
+        "input": "Please detect the disease from the Fundus image. The candidate diseases are: No DR, Mild DR, Moderate DR, Severe DR, PDR.",
+        "output": "Moderate DR",
+        "answer_type": "CLOSED"
+    },
+    {
+        "id": 4,
+        "img_path": "4.png",
+        "input": "Please detect the disease from the Fundus image. The candidate diseases are: No DR, Mild DR, Moderate DR, Severe DR, PDR.",
+        "output": "Severe DR",
+        "answer_type": "CLOSED"
+    },
+    {
+        "id": 5,
+        "img_path": "5.png",
+        "input": "Please detect the disease from the Fundus image. The candidate diseases are: No DR, Mild DR, Moderate DR, Severe DR, PDR.",
+        "output": "Proliferative DR",
+        "answer_type": "CLOSED" 
+    }
+]

@@ -6,7 +6,32 @@
 
 ![Pipeline Diagram](figures/pipeline.jpg)
 
+## 🔨 Code Overview
 
+### 📖 Datasets
+
+- Base Dataset
+
+    In [`src/datasets/base_dataset.py`](./codes/src/datasets/base_dataset.py), we implement a base dataset using `torch.utils.data.Dataset` for training Qwen2.5-VL.  
+    Based on it, you can plug in your own data augmentation pipeline to enable online image augmentations during training.
+
+    **Debug command**
+    ```bash
+    python datasets/base_dataset.py
+    ```
+
+- Attribute Dataset
+
+    In [`src/datasets/attribute_dataset.py`](./codes/src/datasets/attribute_dataset.py), VQA samples with predefined attributes are parsed to produce the "class_label".
+    Demo JSON files and attribute lists are provided in `src/datasets/demo/`.
+
+
+    **Debug command**
+    ```bash
+    python datasets/attribute_dataset_dataset.py
+    ```
+
+**Note**: The five images in the demo folder are solely for fast debugging purposes, and their labels are randomly assigned. Please replace them with your actual training data for real experiments.
 
 
 

@@ -1,0 +1,8 @@
+<|attribute_begin|>
+<|fundus_nodr|>
+<|fundus_milddr|>
+<|fundus_moderatedr|>
+# comment
+<|fundus_severedr|>
+<|fundus_pdr|>
+<|attribute_end|>
