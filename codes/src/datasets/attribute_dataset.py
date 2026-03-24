@@ -225,7 +225,7 @@ class QwenDataCollator:
 
 
 if __name__ == "__main__":
-    model_path = "/public2/hnu/Models/Qwen/Qwen2.5-VL-7B-Instruct"
+    model_path = "your_pth/Qwen/Qwen2.5-VL-7B-Instruct"
     json_path = "datasets/demo/demo_attribute.json"
     image_dir = "datasets/demo"
     token_file = "datasets/demo/attribute_list.txt"
