@@ -17,7 +17,7 @@
 
     **Debug command**
     ```bash
-    python datasets/base_dataset.py
+    python -m datasets.base_dataset
     ```
 
 - Attribute Dataset
@@ -28,11 +28,22 @@
 
     **Debug command**
     ```bash
-    python datasets/attribute_dataset_dataset.py
+    python -m datasets.attribute_dataset_dataset
     ```
 
 **Note**: The five images in the demo folder are solely for fast debugging purposes, and their labels are randomly assigned. Please replace them with your actual training data for real experiments.
 
+
+### 🔧 Training
+
+- Training with Single GPU 
+
+    Please use [src/train/train_att_singlegpu.py](./codes/src/train/train_att_singlegpu.py) to train models. Before training, you should prepare your dataset with predefined attributes (see provided demo in [src/datasets/demo](./codes/src/datasets/demo/)) and define model and dataset paths in [src/train/train_att_singlegpu.py](./codes/src/train/train_att_singlegpu.py).
+
+    **Command**
+    ```bash
+    python -m train.train_att_singlegpu
+    ```
 
 
 ## 📝 Citation

@@ -8,12 +8,8 @@ from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoProcessor
 
-try:
-    # For package-style execution: python -m datasets.attribute_dataset
-    from datasets.add_attribute import add_special_tokens
-except ImportError:
-    # For script-style execution: python datasets/attribute_dataset.py
-    from add_attribute import add_special_tokens
+
+from datasets.add_attribute import add_special_tokens
 
 
 def _find_subsequence(haystack: Sequence[int], needle: Sequence[int], start: int = 0) -> int:
@@ -27,7 +23,7 @@ def _find_subsequence(haystack: Sequence[int], needle: Sequence[int], start: int
     return -1
 
 
-class DiseaseDataset(Dataset):
+class AttributeDataset(Dataset):
     """
     Qwen2.5-VL dataset for supervised fine-tuning.
 
@@ -181,7 +177,7 @@ class DiseaseDataset(Dataset):
 
 
 @dataclass
-class QwenDataCollator:
+class AttributeQwenDataCollator:
     processor: AutoProcessor
 
     def __call__(self, features: List[Dict[str, torch.Tensor]]) -> Dict[str, torch.Tensor]:
@@ -223,29 +219,32 @@ class QwenDataCollator:
             "image_grid_thw": image_grid_thw_cat,
         }
 
-
-if __name__ == "__main__":
-    model_path = "your_pth/Qwen/Qwen2.5-VL-7B-Instruct"
-    json_path = "datasets/demo/demo_attribute.json"
-    image_dir = "datasets/demo"
-    token_file = "datasets/demo/attribute_list.txt"
-
-    # Build processor with custom attribute special tokens.
+def get_attribute_dataset(model_path, json_path, image_dir, token_file, batch_size=5):
     processor = add_special_tokens(model_path, token_file=token_file)
-    dataset = DiseaseDataset(
+    dataset = AttributeDataset(
         json_path=json_path,
         image_dir=image_dir,
         processor=processor,
         max_length=1024,
     )
-    collator = QwenDataCollator(processor=processor)
+    collator = AttributeQwenDataCollator(processor=processor)
     dataloader = DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collator)
+    return dataloader, dataset, processor
+
+
+if __name__ == "__main__":
+    model_path = "your_path/Qwen/Qwen2.5-VL-7B-Instruct"
+    json_path = "datasets/demo/demo_attribute.json"
+    image_dir = "datasets/demo"
+    token_file = "datasets/demo/attribute_list.txt"
+
+    dataloader, dataset, processor = get_attribute_dataset(model_path, json_path, image_dir, token_file, batch_size=5)
 
     for batch in dataloader:
         print("input_ids:", tuple(batch["input_ids"].shape))
         print("attention_mask:", tuple(batch["attention_mask"].shape))
         print("labels:", tuple(batch["labels"].shape))
-        print("class_label:", tuple(batch["class_label"].shape))
+        print("class_label:", batch["class_label"].tolist())
         print("pixel_values:", tuple(batch["pixel_values"].shape))
         print("image_grid_thw:", tuple(batch["image_grid_thw"].shape))
 
@@ -267,3 +266,13 @@ if __name__ == "__main__":
 
     print("invalid_supervision_count:", dataset.invalid_supervision_count)
     print("invalid_class_label_count:", dataset.invalid_class_label_count)
+
+    print("--------------------------------")
+    additional_special_tokens = list(getattr(processor.tokenizer, "additional_special_tokens", []))
+    print("additional_special_tokens:", additional_special_tokens)
+    print(f"id for additional_special_tokens: {processor.tokenizer.convert_tokens_to_ids(additional_special_tokens)}")
+    
+    print("--------------------------------")
+    all_toks = ['<|im_end|>', '<|endoftext|>', '<|im_start|>', '<|object_ref_start|>', '<|object_ref_end|>', '<|box_start|>', '<|box_end|>', '<|quad_start|>', '<|quad_end|>', '<|vision_start|>', '<|vision_end|>', '<|vision_pad|>', '<|image_pad|>', '<|video_pad|>']
+    print(all_toks)
+    print(f"id for all_toks: {processor.tokenizer.convert_tokens_to_ids(all_toks)}")

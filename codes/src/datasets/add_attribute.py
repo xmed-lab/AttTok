@@ -69,6 +69,6 @@ def add_special_tokens(model_path: str, token_file: Optional[str] = None) -> Non
 
 
 if __name__ == "__main__":
-    model_path = "your_pth/Qwen/Qwen2.5-VL-7B-Instruct"
+    model_path = "/your_path/Qwen/Qwen2.5-VL-7B-Instruct"
     token_file = "datasets/demo/attribute_list.txt"
     new_processor = add_special_tokens(model_path, token_file=token_file)
