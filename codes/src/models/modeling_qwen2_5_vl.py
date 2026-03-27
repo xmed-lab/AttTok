@@ -485,7 +485,6 @@ class Qwen2_5_VLCausalLMOutputWithPast(ModelOutput):
     hidden_states: Optional[tuple[torch.FloatTensor]] = None
     attentions: Optional[tuple[torch.FloatTensor]] = None
     rope_deltas: Optional[torch.LongTensor] = None
-    last_vision_embeddings: Optional[torch.FloatTensor] = None
 
 
 class Qwen2_5_VLForConditionalGeneration(Qwen2_5_VLPreTrainedModel, GenerationMixin):
@@ -614,7 +613,6 @@ class Qwen2_5_VLForConditionalGeneration(Qwen2_5_VLPreTrainedModel, GenerationMi
             hidden_states=outputs.hidden_states,
             attentions=outputs.attentions,
             rope_deltas=outputs.rope_deltas,
-            last_vision_embeddings=logits
         )
 
     def prepare_inputs_for_generation(
